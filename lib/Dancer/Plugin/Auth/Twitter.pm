@@ -7,7 +7,7 @@ use Dancer::Plugin;
 use Carp 'croak';
 use Net::Twitter;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 # Net::Twitter singleton, accessible via 'twitter'
 my $_twitter;
@@ -18,6 +18,8 @@ register 'twitter' => \&twitter;
 my $consumer_key;
 my $consumer_secret;
 my $callback_url;
+my $callback_success;
+my $callback_fail;
 
 register 'auth_twitter_init' => sub {
     my $config = plugin_setting;
@@ -25,10 +27,15 @@ register 'auth_twitter_init' => sub {
     $consumer_key    = $config->{consumer_key};
     $callback_url    = $config->{callback_url};
 
+    $callback_success = $config->{callback_success} || '/';
+    $callback_fail    = $config->{callback_fail}    || '/fail';
+
     for my $param (qw/consumer_key consumer_secret callback_url/) {
         croak "'$param' is expected but not found in configuration" 
             unless $config->{$param};
     }
+
+    warn "new twitter with $consumer_key , $consumer_secret, $callback_url";
 
     $_twitter = Net::Twitter->new({ 
         'traits'            => ['API::REST', 'OAuth'],
@@ -58,6 +65,8 @@ register 'auth_twitter_authenticate_url' => sub {
 };
 
 get '/auth/twitter/callback' => sub {
+
+    debug "in callback...";
 
     if (   !session('request_token')
         || !session('request_token_secret')
@@ -93,7 +102,7 @@ get '/auth/twitter/callback' => sub {
 
     if ($@ || !$twitter_user_hash) {
         core("no twitter_user_hash or error: ".$@);
-        return redirect '/fail';
+        return redirect $callback_fail;
     }
 
     $twitter_user_hash->{'access_token'} = $access_token;
@@ -104,7 +113,7 @@ get '/auth/twitter/callback' => sub {
     session 'twitter_access_token'        => $access_token,
     session 'twitter_access_token_secret' => $access_token_secret,
 
-    redirect '/';
+    redirect $callback_success;
 };
  
 register_plugin;
@@ -164,9 +173,14 @@ C<plugins/Auth::Twitter>:
     ...
     plugins:
       "Auth::Twitter":
-        consumer_key: "1234"
-        consumer_secret: "abcd"
-        callback_url: "http://localhost:3000/auth/twitter/callback"
+        consumer_key:     "1234"
+        consumer_secret:  "abcd"
+        callback_url:     "http://localhost:3000/auth/twitter/callback"
+        callback_success: "/"
+        callback_fail:    "/fail"
+
+C<callback_success> and C<callback_fail> are optional and default to 
+'/' and '/fail', respectively.
 
 Note that you also need to provide your callback url, whose route handler is automatically
 created by the plugin.
@@ -216,58 +230,28 @@ bounced back to C</auth/twitter/callback>.
 
 =head1 ROUTE HANDLERS
 
-The plugin defines the following route handler automatically:
+The plugin defines the following route handler automatically
 
 =head2 /auth/twitter/callback
 
 This route handler is responsible for catching back a user that has just
 authenticated herself with Twitter's OAuth. The route handler saves tokens and
-user information in the session and then redirect the user to the root URI of
-your app (C</>).
+user information in the session and then redirects the user to the URI
+specified by C<callback_success>.  
 
-The Twitter user can be accessed by other route handler through
-C<session('twitter_user')>.
+If the validation of the token returned by Twitter, for some reason, failed,
+the user will be redirect to the URI specified by C<callback_fail>.
 
 =head1 AUTHOR
 
-This plugin has been written by Alexis Sukrieh, C<< <sukria at sukria.net> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests through the web interface 
-at L<http://github.com/sukria/Dancer-Plugin-Auth-Twitter/issues>.  
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Dancer::Plugin::Auth::Twitter
-
-You can also look for information at:
-
-=over 4
-
-=item * GitHub
-
-L<http://github.com/sukria/Dancer-Plugin-Auth-Twitter>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Dancer-Plugin-Auth-Twitter>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Dancer-Plugin-Auth-Twitter/>
-
-=back
-
+Alexis Sukrieh, C<< <sukria at sukria.net> >>
 
 =head1 ACKNOWLEDGEMENTS
 
 This plugin has been written as a port of
 L<Catalyst::Authentication::Credential::Twitter> written by 
 Jesse Stay.
-
+  
 This plugin was part of the Perl Dancer Advent Calendar 2010.
 
 =head1 LICENSE AND COPYRIGHT
