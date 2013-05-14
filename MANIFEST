@@ -1,10 +1,17 @@
+Build.PL
 Changes
+LICENSE
 MANIFEST
+META.json
+META.yml
 Makefile.PL
 README
 lib/Dancer/Plugin/Auth/Twitter.pm
+t/00-compile.t
 t/00-load.t
 t/manifest.t
-t/pod-coverage.t
-t/pod.t
-META.yml                                 Module meta-data (added by MakeMaker)
+t/release-distmeta.t
+t/release-no-tabs.t
+t/release-pod-syntax.t
+xt/pod-coverage.t
+xt/pod.t
