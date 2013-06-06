@@ -53,7 +53,7 @@
    "provides" : {
       "Dancer::Plugin::Auth::Twitter" : {
          "file" : "lib/Dancer/Plugin/Auth/Twitter.pm",
-         "version" : "0.03"
+         "version" : "0.04"
       }
    },
    "release_status" : "stable",
@@ -65,6 +65,6 @@
          "url" : "https://github.com/PerlDancer/Dancer-Plugin-Auth-Twitter"
       }
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
 

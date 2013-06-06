@@ -22,7 +22,7 @@ my %module_build_args = (
     "Dancer Core Developers"
   ],
   "dist_name" => "Dancer-Plugin-Auth-Twitter",
-  "dist_version" => "0.03",
+  "dist_version" => "0.04",
   "license" => "perl",
   "module_name" => "Dancer::Plugin::Auth::Twitter",
   "recommends" => {},

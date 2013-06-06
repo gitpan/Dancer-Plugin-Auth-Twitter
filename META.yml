@@ -21,7 +21,7 @@ name: Dancer-Plugin-Auth-Twitter
 provides:
   Dancer::Plugin::Auth::Twitter:
     file: lib/Dancer/Plugin/Auth/Twitter.pm
-    version: 0.03
+    version: 0.04
 requires:
   Carp: 0
   Dancer: 0
@@ -32,4 +32,4 @@ requires:
 resources:
   bugtracker: https://github.com/PerlDancer/Dancer-Plugin-Auth-Twitter
   repository: https://github.com/PerlDancer/Dancer-Plugin-Auth-Twitter
-version: 0.03
+version: 0.04
