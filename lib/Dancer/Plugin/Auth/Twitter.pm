@@ -1,6 +1,6 @@
 package Dancer::Plugin::Auth::Twitter;
 {
-  $Dancer::Plugin::Auth::Twitter::VERSION = '0.04';
+  $Dancer::Plugin::Auth::Twitter::VERSION = '0.05';
 }
 #ABSTRACT: Authenticate with Twitter
 
@@ -153,7 +153,7 @@ Dancer::Plugin::Auth::Twitter - Authenticate with Twitter
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

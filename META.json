@@ -37,7 +37,7 @@
             "Carp" : "0",
             "Dancer" : "0",
             "Dancer::Plugin" : "0",
-            "Net::Twitter" : "0",
+            "Net::Twitter" : "4.00001",
             "strict" : "0",
             "warnings" : "0"
          }
@@ -53,7 +53,7 @@
    "provides" : {
       "Dancer::Plugin::Auth::Twitter" : {
          "file" : "lib/Dancer/Plugin/Auth/Twitter.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       }
    },
    "release_status" : "stable",
@@ -65,6 +65,6 @@
          "url" : "https://github.com/PerlDancer/Dancer-Plugin-Auth-Twitter"
       }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
 

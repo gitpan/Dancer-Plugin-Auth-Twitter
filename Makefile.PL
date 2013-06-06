@@ -29,11 +29,11 @@ my %WriteMakefileArgs = (
     "Carp" => 0,
     "Dancer" => 0,
     "Dancer::Plugin" => 0,
-    "Net::Twitter" => 0,
+    "Net::Twitter" => "4.00001",
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.04",
+  "VERSION" => "0.05",
   "test" => {
     "TESTS" => "t/*.t"
   }
