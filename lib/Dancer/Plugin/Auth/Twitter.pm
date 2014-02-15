@@ -1,9 +1,6 @@
 package Dancer::Plugin::Auth::Twitter;
-{
-  $Dancer::Plugin::Auth::Twitter::VERSION = '0.05';
-}
 #ABSTRACT: Authenticate with Twitter
-
+$Dancer::Plugin::Auth::Twitter::VERSION = '0.06';
 use strict;
 use warnings;
 
@@ -44,6 +41,7 @@ register 'auth_twitter_init' => sub {
         'traits'            => ['API::RESTv1_1', 'OAuth'],
         'consumer_key'      => $consumer_key, 
         'consumer_secret'   => $consumer_secret,
+        ssl                 => 1,
     });
 
 };
@@ -153,7 +151,7 @@ Dancer::Plugin::Auth::Twitter - Authenticate with Twitter
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
